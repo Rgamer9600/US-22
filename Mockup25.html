@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Órdenes de Despacho</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .box { border:1px solid #000; padding:2rem; max-width:400px; margin:2rem auto; display:flex; flex-direction:column; gap:1rem; background-color:#fff; }
+    .panel-box { border:1px solid #000; padding:1rem; margin-top:1rem; border-radius:0; }
+    .success { background-color:#d5e8d4; border-color:#82b366; }
+    .error { background-color:#f8d7da; border-color:#c9302c; }
+    .warning { background-color:#fff3cd; border-color:#856404; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box">
+      <h3 class="text-center">Generar Orden de Despacho</h3>
+
+      <div class="mb-3">
+        <label class="form-label">Pedidos pendientes</label>
+        <input type="number" class="form-control" id="pedidosPendientes" value="5">
+      </div>
+
+      <button id="btnGenerar" class="btn btn-primary w-100">Generar Orden</button>
+      <input type="checkbox" id="impresoraConectada" checked> Impresora conectada
+    </div>
+
+    <div class="panel-box success" id="orden-exitosa" style="display:none;">
+      <h5>Generación exitosa</h5>
+      <p>Orden impresa y registrada correctamente</p>
+    </div>
+
+    <div class="panel-box error" id="error-impresora" style="display:none;">
+      <h5>Error de impresora</h5>
+      <p>Error de impresión, revise la impresora</p>
+    </div>
+
+    <div class="panel-box warning" id="orden-vacia" style="display:none;">
+      <h5>Orden vacía</h5>
+      <p>No hay pedidos para generar</p>
+    </div>
+  </div>
+
+  <script>
+    const btnGenerar = document.getElementById('btnGenerar');
+
+    btnGenerar.addEventListener('click', () => {
+      const pendientes = Number(document.getElementById('pedidosPendientes').value);
+      const impresoraConectada = document.getElementById('impresoraConectada').checked;
+
+      document.getElementById('orden-exitosa').style.display = 'none';
+      document.getElementById('error-impresora').style.display = 'none';
+      document.getElementById('orden-vacia').style.display = 'none';
+
+      if (pendientes <= 0) {
+        document.getElementById('orden-vacia').style.display = 'block';
+      } else if (!impresoraConectada) {
+        document.getElementById('error-impresora').style.display = 'block';
+      } else {
+        document.getElementById('orden-exitosa').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
